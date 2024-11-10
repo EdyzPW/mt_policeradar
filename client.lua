@@ -4,6 +4,7 @@ local showRadar = (not GetResourceKvpInt('showRadar') and Radar.defaultShowingRa
 local speedMultiplier = Radar.speedType == "MPH" and 2.23694 or 3.6
 local showingRadar = false
 local radarLocked = false
+local invOpen = LocalPlayer.state.invOpen
 
 ---@param message string
 ---@param type string
@@ -62,6 +63,9 @@ local function vehicleLoop()
 
             if showingRadar then 
                 if IsPauseMenuActive() then
+                    SendNUIMessage({ action = 'setVisibleRadar', data = false })
+                    showingRadar = false
+                elseif invOpen then
                     SendNUIMessage({ action = 'setVisibleRadar', data = false })
                     showingRadar = false
                 else
